@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/styles/styles.css" />
+    <title>Travelers Hub</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <!-- Navigation -->
+
+            <!-- Logo image: a link to index/home page -->
+            <a id="logo" href="#">
+                <img id="logo-img" src="/static/images/logo-boeing.png" alt="logo" />
+            </a>
+
+            <nav>
+
+                <!-- If there is a traveler's profile -->
+
+                <div class="user">
+                    <a href="#">All Trips</a>
+                    <a href="#">Share Trip</a>
+                    <a href="#">Traveler's Profile</a>
+                </div>
+
+                <!-- If the traveler's profile has NOT been created -->
+
+                <div class="guest">
+                    <a href="#">New Traveler's Profile</a>
+                </div>
+
+            </nav>
+        </header>
+
+        <main>
+
+            <!-- Traveler's Profile Details Section -->
+
+            <section id="details">
+                <div id="details-wrapper">
+                    <h2>Traveler's Profile</h2>
+
+                    <!-- a default traveler's image -->
+                    <img id="details-img" src="/static/images/default-traveler.png" alt="profile img" />
+
+                    <!-- traveler's nickname -->
+                    <p id="details-title">MyNickname</p>
+
+                    <!-- traveler's email and country -->
+                    <p id="nutrition"><span>Email: </span>test@test.com<span> Country: </span>BGR</p>
+
+                    <div id="info-wrapper">
+                        <div id="details-description">
+
+                            <!-- info (about me) if provided, skip it if there is no info -->
+                            <p><span>About me: </span>I’ve got a soft spot for sunrises on mountaintops and sunsets by
+                                the ocean. Traveling fuels my creativity and keeps me grounded at the same time. Always
+                                planning my next escape!
+                            </p>
+
+                            <!-- if there are trips - list data; skip if no trips -->
+                            <p><span>Shared Trips:</span></p>
+
+                            <!-- <ul> element containing all trips, ordered by start_date descending -->
+                            <ul>
+                                <!-- <li> element for each trip's data in the format: "{destination}: {duration} day/s, started on: {start_date}" -->
+                                <!-- trip 1-->
+                                <li>Cusco, Peru: 10 day/s, started on: 2024-11-08</li>
+                                <!-- trip 2-->
+                                <li>Reykjavik, Iceland: 3 day/s, started on: 2024-10-31</li>
+                                <!-- trip 3-->
+                                <li>Kyoto, Japan: 5 day/s, started on: 2024-10-17</li>
+                                <!-- trip 4-->
+                                <li>London, UK: 2 day/s, started on: 2024-10-13</li>
+
+                            </ul>
+
+                        </div>
+                        <!--Edit and Delete buttons -->
+                        <div id="action-buttons">
+                            <a href="#" id="edit-btn">Edit</a>
+                            <a href="#" id="delete-btn">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <!-- footer -->
+    <footer>
+        <p>&copy; 2024 Travelers Hub by SoftUni Team. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

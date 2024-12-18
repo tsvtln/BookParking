@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/styles/styles.css" />
+    <title>Travelers Hub</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <!-- Navigation -->
+
+            <!-- Logo image: a link to index/home page -->
+            <a id="logo" href="#">
+                <img id="logo-img" src="/static/images/logo-boeing.png" alt="logo" />
+            </a>
+
+            <nav>
+
+                <!-- If there is a traveler's profile -->
+
+                <div class="user">
+                    <a href="#">All Trips</a>
+                    <a href="#">Share Trip</a>
+                    <a href="#">Traveler's Profile</a>
+                </div>
+
+                <!-- If the traveler's profile has NOT been created -->
+
+                <div class="guest">
+                    <a href="#">New Traveler's Profile</a>
+                </div>
+
+            </nav>
+        </header>
+
+        <main>
+
+            <!-- Add Trip Form -->
+            <section id="create">
+                <div class="form">
+                    <h2>Share a New Trip</h2>
+                    <form class="create-form" action="" method="">
+                        <div>
+                            <label for="id_destination">Destination:</label>
+
+                            <input type="text" name="destination" maxlength="100"
+                                placeholder="Enter a short destination note..." required id="id_destination">
+
+                        </div>
+
+                        <div>
+                            <label for="id_summary">Summary:</label>
+
+                            <textarea name="summary" cols="40" rows="10" placeholder="Share your exciting moments..."
+                                required id="id_summary">
+                            </textarea>
+
+                        </div>
+
+                        <div>
+                            <label for="id_start_date">Started on:</label>
+
+                            <input type="date" name="start_date" required id="id_start_date">
+
+                        </div>
+
+                        <div>
+                            <label for="id_duration">Duration:</label>
+
+                            <div class="helptext" id="id_duration_helptext">*Duration in days is expected.</div>
+
+                            <input type="number" name="duration" value="1" min="0" required
+                                aria-describedby="id_duration_helptext" id="id_duration">
+
+                        </div>
+
+                        <div>
+                            <label for="id_image_url">Image URL:</label>
+
+                            <input type="url" name="image_url" maxlength="200" placeholder="An optional image URL..."
+                                id="id_image_url">
+
+                        </div>
+
+                        <button type="submit">Share</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <!-- footer -->
+    <footer>
+        <p>&copy; 2024 Travelers Hub by SoftUni Team. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

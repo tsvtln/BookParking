@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/styles/styles.css" />
+    <title>Travelers Hub</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <!-- Navigation -->
+
+            <!-- Logo image: a link to index/home page -->
+            <a id="logo" href="#">
+                <img id="logo-img" src="/static/images/logo-boeing.png" alt="logo" />
+            </a>
+
+            <nav>
+
+                <!-- If there is a traveler's profile -->
+
+                <div class="user">
+                    <a href="#">All Trips</a>
+                    <a href="#">Share Trip</a>
+                    <a href="#">Traveler's Profile</a>
+                </div>
+
+                <!-- If the traveler's profile has NOT been created -->
+
+                <div class="guest">
+                    <a href="#">New Traveler's Profile</a>
+                </div>
+
+            </nav>
+        </header>
+
+        <main>
+
+            <!-- Trip Details -->
+            <section id="details">
+                <div id="details-wrapper">
+                    <h2>Trip Details</h2>
+
+                    <!-- trip image if there is such, otherwise display the default one -->
+                    <img src="https://cdn.pixabay.com/photo/2021/10/05/16/53/kimono-6683245_1280.jpg"
+                        alt="Kyoto, Japan img" />
+
+                    <!-- trip destination -->
+                    <p id="details-title">Kyoto, Japan</p>
+
+                    <div id="info-wrapper">
+                        <div id="details-description">
+
+                            <!-- trip start date in format "D d M Y" -->
+                            <p class="description">
+                                Thu 17 Oct 2024
+                            </p>
+                            <!-- trip duration -->
+                            <p>
+                                5 day/s
+                            </p>
+                            <!-- trip summary -->
+                            <p>
+                                Wandering through Kyoto felt like stepping into a storybook. I got lost beneath the
+                                thousands of red torii gates at Fushimi Inari, and sipping matcha by the peaceful
+                                Kinkaku-ji (Golden Pavilion) was pure serenity. Don’t miss a stroll along the
+                                Philosopher’s Path during cherry blossom season—truly magical!
+                            </p>
+                        </div>
+
+                        <!--Edit and Delete buttons -->
+                        <div id="action-buttons">
+                            <a href="#" id="edit-btn">Edit</a>
+                            <a href="#" id="delete-btn">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <!-- footer -->
+    <footer>
+        <p>&copy; 2024 Travelers Hub by SoftUni Team. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

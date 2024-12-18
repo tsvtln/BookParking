@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/styles/styles.css" />
+    <title>Travelers Hub</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <!-- Navigation -->
+
+            <!-- Logo image: a link to index/home page -->
+            <a id="logo" href="#">
+                <img id="logo-img" src="/static/images/logo-boeing.png" alt="logo" />
+            </a>
+
+            <nav>
+
+                <!-- If there is a traveler's profile -->
+
+                <div class="user">
+                    <a href="#">All Trips</a>
+                    <a href="#">Share Trip</a>
+                    <a href="#">Traveler's Profile</a>
+                </div>
+
+                <!-- If the traveler's profile has NOT been created -->
+
+                <div class="guest">
+                    <a href="#">New Traveler's Profile</a>
+                </div>
+
+            </nav>
+        </header>
+
+        <main>
+
+            <!-- All Trips page -->
+
+            <!-- Display a heading if there are trips, including their count -->
+            <h2>4 Shared Trips</h2>
+            <!-- Display a heading if there are NO trips -->
+            <h2>No shared trips</h2>
+
+            <section id="dashboard">
+
+                <!-- Display a div with information about each trip (if any). Trips must be ordered by start_date descending -->
+
+                <!-- first trip -->
+                <div class="post">
+                    <!-- trip image if there is such, otherwise display the default one -->
+
+                    <img src="https://cdn.pixabay.com/photo/2019/09/17/17/56/machu-picchu-4484205_1280.jpg"
+                        alt="Cusco, Peru img" />
+
+                    <!-- trip destination -->
+                    <h3 class="title">Cusco, Peru</h3>
+                    <!-- trip start date in format "D d M Y" -->
+                    <p class="description">Fri 08 Nov 2024</p>
+                    <!-- trip details button -->
+                    <a class="details-btn" href="#">Details</a>
+                </div>
+
+                <!-- second trip -->
+                <div class="post">
+                    <!-- trip image if there is such, otherwise display the default one -->
+
+                    <img src="https://cdn.pixabay.com/photo/2018/11/07/18/29/iceland-3800913_1280.jpg"
+                        alt="Reykjavik, Iceland img" />
+
+                    <!-- trip destination -->
+                    <h3 class="title">Reykjavik, Iceland</h3>
+                    <!-- trip start date in format "D d M Y" -->
+                    <p class="description">Thu 31 Oct 2024</p>
+                    <!-- trip details button -->
+                    <a class="details-btn" href="#">Details</a>
+                </div>
+
+                <!-- third trip -->
+                <div class="post">
+                    <!-- trip image if there is such, otherwise display the default one -->
+
+                    <img src="https://cdn.pixabay.com/photo/2021/10/05/16/53/kimono-6683245_1280.jpg"
+                        alt="Kyoto, Japan img" />
+
+                    <!-- trip destination -->
+                    <h3 class="title">Kyoto, Japan</h3>
+                    <!-- trip start date in format "D d M Y" -->
+                    <p class="description">Thu 17 Oct 2024</p>
+                    <!-- trip details button -->
+                    <a class="details-btn" href="#">Details</a>
+                </div>
+
+                <!-- fourth trip -->
+                <div class="post">
+                    <!-- trip image if there is such, otherwise display the default one -->
+                    <!-- a default image-->
+                    <img src="/static/images/default-trip.jpg" alt="London, UK img" />
+
+                    <!-- trip destination -->
+                    <h3 class="title">London, UK</h3>
+                    <!-- trip start date in format "D d M Y" -->
+                    <p class="description">Sun 13 Oct 2024</p>
+                    <!-- trip details button -->
+                    <a class="details-btn" href="#">Details</a>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+    <!-- footer -->
+    <footer>
+        <p>&copy; 2024 Travelers Hub by SoftUni Team. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
