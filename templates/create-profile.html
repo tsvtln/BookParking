@@ -1,89 +1,69 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=\, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/styles/styles.css" />
-    <title>Travelers Hub</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/form.css' %}"/>
+    <title>Create Profile</title>
 </head>
 
 <body>
-    <div id="wrapper">
-        <header>
-            <!-- Navigation -->
+<div id="wrapper">
+    <header>
+        <!-- Navigation -->
+        <a id="logo" href="{% url 'index' %}">
+            <img id="logo-img" src="{% static 'images/logo.jpg' %}" alt="logo"/>
+        </a>
+    </header>
 
-            <!-- Logo image: a link to index/home page -->
-            <a id="logo" href="#">
-                <img id="logo-img" src="/static/images/logo-boeing.png" alt="logo" />
-            </a>
+    <main>
+        <section id="register">
+            <div class="form">
+                <h2>Create Profile</h2>
 
-            <nav>
+                <!-- Display Form -->
+                <form class="register-form" method="post" action="">
+                    {% csrf_token %}
+                    {{ form.as_p }}
 
-                <!-- If there is a traveler's profile -->
+                    <!-- Submit Button -->
+                    <button type="submit">Create</button>
+                </form>
 
-                <div class="user">
-                    <a href="#">All Trips</a>
-                    <a href="#">Share Trip</a>
-                    <a href="#">Traveler's Profile</a>
-                </div>
+                <!-- Error Messages -->
+                {% if form.errors %}
+                    <div class="form-errors">
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                <li><strong>{{ field }}:</strong> {{ errors|join:", " }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</div>
 
-                <!-- If the traveler's profile has NOT been created -->
-
-                <div class="guest">
-                    <a href="#">New Traveler's Profile</a>
-                </div>
-
-            </nav>
-        </header>
-
-        <main>
-
-            <!-- Create Traveler's Profile Form (Only if no traveler's profile has been created) -->
-            <section id="register">
-                <div class="form">
-                    <h2>New Traveler's Profile</h2>
-                    <form class="register-form" method="" action="">
-                        <div>
-                            <label for="id_nickname">Nickname:</label>
-
-                            <div class="helptext" id="id_nickname_helptext">*Nicknames can contain only letters and
-                                digits.</div>
-
-                            <input type="text" name="nickname" maxlength="30" placeholder="Enter a unique nickname..."
-                                required aria-describedby="id_nickname_helptext" id="id_nickname">
-
-                        </div>
-
-                        <div>
-                            <label for="id_email">Email:</label>
-
-                            <input type="email" name="email" maxlength="30" placeholder="Enter a valid email address..."
-                                required id="id_email">
-
-                        </div>
-
-                        <div>
-                            <label for="id_country">Country:</label>
-
-                            <input type="text" name="country" maxlength="3"
-                                placeholder="Enter a country code like &lt;BGR&gt;..." required id="id_country">
-
-                        </div>
-
-                        <button type="submit">Create</button>
-
-                    </form>
-                </div>
-            </section>
-
-        </main>
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
     </div>
-    <!-- footer -->
-    <footer>
-        <p>&copy; 2024 Travelers Hub by SoftUni Team. All rights reserved.</p>
-    </footer>
+{% endif %}
+
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Parking Booker Hub. All rights reserved to ProNetGaming.</p>
+</footer>
 </body>
 
 </html>

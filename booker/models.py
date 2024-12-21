@@ -1,64 +1,86 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as gl
+from django.core.validators import RegexValidator
+from django.contrib.auth.hashers import make_password
 
 
-class Account(models.Model):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        related_name='account',
-        null=True,
-        blank=True,
-    )
+class AccountManager(BaseUserManager):
+    """Custom manager for the Account model."""
 
-    first_name = models.CharField(
-        max_length=100,
-        unique=False,
-        help_text='Your first name',
-    )
+    def create_user(self, nickname, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("The Email field must be set.")
+        if not nickname:
+            raise ValueError("The Nickname field must be set.")
+        email = self.normalize_email(email)
+        extra_fields.setdefault("is_active", True)
+        user = self.model(nickname=nickname, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-    second_name = models.CharField(
-        max_length=100,
-        unique=False,
-        help_text='Your second name',
-    )
+    def create_superuser(self, nickname, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
 
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(nickname, email, password, **extra_fields)
+
+
+class Account(AbstractBaseUser, PermissionsMixin):
     nickname = models.CharField(
         max_length=30,
         unique=True,
-        help_text='*Nicknames can contain only letters and digits.'
+        help_text="*Nicknames can contain only letters and digits.",
     )
-
     email = models.EmailField(
         max_length=100,
         unique=True,
+        help_text="Email address must be unique.",
     )
-
+    first_name = models.CharField(max_length=30, help_text="Your first name.")
+    second_name = models.CharField(max_length=30, help_text="Your last name.")
     phone_number = models.CharField(
-        max_length=15,
+        max_length=10,
         unique=True,
         null=True,
         blank=True,
-        help_text='Your phone number',
+        validators=[RegexValidator(r"^\d{10}$", "Enter a valid 10-digit phone number")],
     )
-
     profile_picture = models.ImageField(
-        upload_to='profile_pictures/',
+        upload_to="profile_pictures/",
         null=True,
         blank=True,
-        help_text='Upload a profile picture',
+        help_text="Upload a profile picture.",
     )
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+
+    USERNAME_FIELD = "nickname"
+    REQUIRED_FIELDS = ["email"]
+
+    objects = AccountManager()
+
+    def save(self, *args, **kwargs):
+        if not self.password.startswith("pbkdf2_"):
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
 
     def clean(self):
         super().clean()
         if not self.nickname.isalnum() or len(self.nickname) < 3:
-            raise ValidationError(gl('Your nickname is invalid!'))
-        if not self.email.endswith('@pronetgaming.com'):
-            raise ValidationError(gl('Only @pronetgaming.com emails are allowed!'))
+            raise ValidationError(gl("Your nickname is invalid!"))
+        if not self.email.endswith("@pronetgaming.com"):
+            raise ValidationError(gl("Only @pronetgaming.com emails are allowed!"))
         if Account.objects.filter(nickname__iexact=self.nickname).exists():
-            raise ValidationError(gl('This nickname is already taken!'))
+            raise ValidationError(gl("This nickname is already taken!"))
 
     def __str__(self):
         return f"{self.first_name} ({self.nickname}) {self.second_name}"
@@ -94,7 +116,7 @@ class ParkingAvailability(models.Model):
 
 class Booking(models.Model):
     user = models.ForeignKey(
-        User,
+        Account,
         on_delete=models.CASCADE,
         related_name='bookings',
         help_text="The user who booked this booking.",

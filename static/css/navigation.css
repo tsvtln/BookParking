@@ -1,0 +1,140 @@
+body {
+    color: var(--primary-text);
+    background-image: url('/static/images/homepage_main_background_edited.png');
+    background-size: cover;
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    width: 97vw;
+    font-family: var(--font-primary); /* Use defined font variable */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 3em;
+    width: 90vw;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent header */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    margin: 10px auto;
+    transition: transform 0.3s ease;
+    clip-path: var(--form-clip-path);
+}
+
+header:hover {
+    transform: scale(1.02); /* Slight scaling effect */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo-img {
+    height: 80px;
+    transition: transform 0.2s ease;
+}
+
+#logo-img:hover {
+    transform: rotate(10deg) scale(1.1); /* Fun hover effect */
+}
+
+nav a {
+    font-size: 1.4rem;
+    color: var(--nav-link); /* Subtle link color */
+    font-family: var(--font-heading); /* Use defined heading font variable */
+    font-weight: 500;
+    margin: 0 10px;
+    transition: color 0.3s ease, font-size 0.2s ease;
+}
+
+header a {
+    padding: 0 15px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: var(--nav-hover); /* Cyan glow on hover */
+    text-decoration: underline;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+footer {
+    background-color: var(--footer-bg); /* Dark footer */
+    color: var(--footer-text); /* White text for readability */
+    font-weight: bolder;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+footer p {
+    margin-top: -1px;
+    font-family: var(--font-heading); /* Use defined font variable */
+    font-size: 14px;
+    color: var(--footer-text); /* White text for readability */
+}
+
+#home img {
+    display: block;
+    margin: 30px auto;
+    height: 25%;
+    width: 25%;
+    transform: rotate(10deg); /* Rotated for a playful look */
+    transition: transform 0.3s ease;
+}
+
+#home img:hover {
+    transform: rotate(0deg) scale(1.05); /* Reset rotation with scaling */
+}
+
+#home h1 {
+    margin-top: 20px;
+    font-style: italic;
+    font-size: 60px;
+    font-weight: 600;
+    text-align: center;
+    color: var(--heading-color); /* Coral heading color */
+    text-transform: capitalize;
+    transition: color 0.3s ease;
+}
+
+#home h1:hover {
+    color: var(--nav-hover); /* Glow effect on hover */
+}
+
+/* Welcome Section for Index Page */
+#welcome-section {
+    text-align: center; /* Center-align the heading and image */
+    margin: 50px auto; /* Add spacing above and below */
+    max-width: 600px; /* Limit the width of the section */
+}
+
+#welcome-section h1 {
+    font-size: 2.5rem; /* Large font size */
+    font-weight: bold; /* Bold text */
+    font-style: italic; /* Italic text */
+    color: #e67169; /* A not-very-dark red (firebrick) */
+    margin-bottom: 20px; /* Add space between the heading and the image */
+    text-align: center; /* Center the heading */
+}
+
+#welcome-img {
+    width: 100%; /* Scale image responsively */
+    max-width: 400px; /* Limit the image width */
+    height: auto; /* Maintain aspect ratio */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+#welcome-img:hover {
+    transform: rotate(15deg) scale(1.05); /* Slight tilt and zoom on hover */
+}
+

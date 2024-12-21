@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--white-color);
+  font-family: var(--font-primary); /* Use Poppins for body text */
+  color: white;
+}
+
+#dashboard {
+  margin: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+h2 {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--h2-color);
+  font-family: var(--font-heading); /* Use Orbitron for headings */
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.post {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 25vw;
+  height: 50vh;
+  margin: 20px auto;
+  padding: 1rem;
+  background-color: var(--card-background);
+  border-radius: var(--border-radius-big);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--card-box-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  clip-path: var(--form-clip-path);
+}
+
+.post:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 40px rgba(34, 211, 238, 0.5);
+}
+
+.post img {
+  height: 15vw;
+  width: 15vw;
+  border-radius: var(--border-radius-big);
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  clip-path: var(--form-clip-path);
+}
+
+.post .title {
+  margin-top: 10px;
+  font-family: var(--font-heading); /* Use Orbitron for trips titles */
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: var(--hover-background);
+  text-transform: uppercase;
+}
+
+.details-btn {
+  margin-top: 10px;
+  font-size: 18px;
+  width: 160px;
+  border-radius: 5px;
+  text-align: center;
+  padding: 8px;
+  font-family: var(--font-primary); /* Use Poppins for button text */
+  font-weight: 600;
+  color: white;
+  background-color: var(--orange-background);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  clip-path: var(--form-clip-path);
+}
+
+.details-btn:hover {
+  background-color: var(--hover-background);
+  font-weight: 700;
+  transform: scale(1.1);
+  color: var(--orange-background);
+}
+
+.post p {
+  margin: 10px auto;
+  font-size: 1rem;
+  font-weight: 400;
+  width: 90%;
+  text-align: center;
+  color: white;
+  font-family: var(--font-primary); /* Use Poppins for paragraph text */
+}
+
+.post h3 {
+  color: var(--h2-color);
+  font-family: var(--font-heading); /* Use Orbitron for h3 headings */
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+

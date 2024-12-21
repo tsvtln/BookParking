@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Poppins:wght@400;700&family=Kaushan+Script&display=swap');
+
+
+:root {
+    /* fonts */
+    --font-primary: 'Poppins', 'Arial', sans-serif;
+    --font-heading: 'Orbitron', 'Georgia', sans-serif;
+    --font-accent: 'Lobster Two', 'Verdana', cursive;
+    --font-script: 'Kaushan Script', 'Brush Script MT', cursive; /* Script font for buttons */
+
+
+    /* Vibrant Dark Theme Variables */
+    --white-color: #1a1a2e; /* Dark background */
+    --h2-color: rgb(34, 211, 238); /* Neon cyan for headings */
+
+    /* Cards with glassmorphism effect */
+    --card-background: rgba(255, 255, 255, 0.1); /* Glass-like background */
+    --card-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+    0 4px 6px 0 rgba(0, 0, 0, 0.25); /* Depth + glow effect */
+
+    /* Bold accents */
+    --orange-background: rgb(255, 69, 58); /* Vibrant red */
+    --hover-background: rgb(255, 175, 163); /* Soft pastel red */
+
+    /* Rounded but modern */
+    --border-radius-big: 15px;
+
+    /* Input fields */
+    --light-input-background: rgba(255, 255, 255, 0.05); /* Transparent input */
+    --light-border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle glowing border */
+    --readonly-background: rgba(50, 50, 50, 0.2); /* Dark readonly field */
+
+    --details-background: rgba(0, 0, 0, 0.6); /* Dark semi-transparent background */
+    --button-background: rgb(102, 102, 255); /* Bright interactive button color */
+    --button-hover: rgb(51, 51, 204); /* Darker blue on hover */
+    --text-muted: rgba(255, 255, 255, 0.7); /* Slightly muted text for descriptions */
+    --border-radius-round: 50px; /* Soft rounder edges for sections */
+    --large-border-radius: 80px; /* Large rounded corners for containers */
+
+    --form-background: rgba(255, 255, 255, 0.07); /* Glass effect for forms */
+    --button-primary: rgb(102, 255, 178); /* Vibrant green for buttons */
+    --button-primary-hover: rgb(0, 204, 136); /* Darker green on hover */
+    --muted-message: rgba(255, 255, 255, 0.5); /* Muted text for messages */
+    --error-text: #ff6b6b; /* Bright error color */
+    --form-radius: 25px; /* Softer rounded corners */
+    --input-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* Subtle shadow for inputs */
+    --placeholder-text-color: #ffffcc;
+    --form-clip-path: polygon(10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%, 0% 10%);
+    --form-border: 3px double rgba(0, 0, 0, 0.5); /* Outer border */
+
+    --body-bg: linear-gradient(120deg, rgba(34, 193, 195, 0.4) 0%, rgba(253, 187, 45, 0.6) 100%);
+    --primary-text: #e8e8e8; /* Light text for contrast */
+    --nav-link: rgba(255, 255, 255, 0.9); /* Slightly transparent for subtle links */
+    --nav-hover: rgb(34, 211, 238); /* Cyan glow for hover */
+    --footer-bg: rgba(0, 0, 0, 0.8); /* Dark footer for better contrast */
+    --footer-text: #ffffff; /* White text for readability */
+    --heading-color: rgb(255, 102, 102); /* Soft coral for headings */
+}

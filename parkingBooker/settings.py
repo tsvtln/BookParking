@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "booker.apps.BookerConfig"
+    "booker.apps.BookerConfig",
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'booker.authenticator.AccountBackend',  # Your custom backend
+]
+AUTH_USER_MODEL = "booker.Account"
+
+
 
 
 # Internationalization

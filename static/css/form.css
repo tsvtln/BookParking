@@ -1,0 +1,179 @@
+.login-page {
+    width: 400px;
+    padding: 6% 0 0;
+    margin: auto;
+}
+
+.form {
+    clip-path: var(--form-clip-path);
+    background-color: var(--form-background); /* Glass-like background */
+    max-width: 460px;
+    margin: 60px auto;
+    padding: 50px;
+    text-align: center;
+    border-radius: var(--form-radius); /* Softer corners */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.2);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /*border: var(--form-border);*/
+
+}
+
+.form:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 30px rgba(34, 211, 238, 0.4);
+}
+
+.form h2 {
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-family: var(--font-heading); /* Use Orbitron for form headings */
+    color: var(--h2-color);
+}
+
+.form label {
+    font-size: 18px;
+    font-family: var(--font-primary); /* Use Poppins for labels */
+    margin-bottom: 5px;
+    display: block;
+    color: var(--hover-background);
+}
+
+.form input {
+    border-radius: 15px;
+    outline: 0;
+    background: var(--light-input-background);
+    width: 90%;
+    height: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0 0 15px;
+    padding: 15px;
+    font-size: 16px;
+    font-family: var(--font-primary); /* Use Poppins for input fields */
+    color: var(--text-muted);
+    box-shadow: var(--input-shadow);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.form input:focus {
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
+    transform: scale(1.02);
+}
+
+.form textarea {
+    background: var(--light-input-background);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 90%;
+    height: 50px;
+    resize: vertical;
+    margin-bottom: 10px;
+    padding: 15px;
+    font-family: var(--font-primary); /* Use Poppins for text areas */
+    color: var(--text-muted);
+    box-shadow: var(--input-shadow);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.form button {
+    font-family: var(--font-primary); /* Use Kaushan Script for buttons */
+    text-transform: uppercase;
+    outline: 0;
+    background: var(--orange-background); /* Bright button background */
+    width: 50%;
+    border: 0;
+    padding: 15px;
+    color: var(--text-muted);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    /*border-radius: var(--form-radius);*/
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    clip-path: var(--form-clip-path);
+}
+
+.form button:hover {
+    background: var(--hover-background); /* Darker color on hover */
+    transform: scale(1.1);
+    font-weight: 900;
+    color: var(--orange-background);
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.form .message {
+    margin: 20px 0;
+    color: var(--muted-message); /* Muted message color */
+    font-size: 18px;
+}
+
+.form .message a {
+    color: var(--button-primary-hover);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#search .form h2 {
+    margin-top: -30px;
+    margin-bottom: 10px;
+    font-size: 28px;
+    color: var(--h2-color);
+}
+
+.search-result > .post {
+    transform: scale(0.6);
+}
+
+.search-result {
+    margin-top: -40px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.no-result {
+    margin-top: 8rem;
+    font-size: 30px;
+    color: var(--white-color);
+}
+
+.helptext {
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+.errorlist {
+    font-size: 18px;
+    color: var(--error-text); /* Error color */
+}
+
+input[readonly="readonly"],
+textarea[readonly="readonly"],
+select[readonly="readonly"] {
+    background-color: var(--readonly-background);
+    color: var(--details-background);
+}
+
+.form textarea:focus {
+    border: none; /* Remove the border on focus */
+    outline: none; /* Remove outline */
+    /*padding: 2px;*/
+    /*white-space;*/
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+    border: var(--light-border);
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+    color: var(--placeholder-text-color); /* Replace with your desired variable or color */
+    opacity: 0.8; /* Adjust opacity for better visibility if needed */
+}
