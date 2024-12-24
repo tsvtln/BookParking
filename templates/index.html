@@ -17,8 +17,9 @@
 <body>
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">Parking Booker Hub</a>
-    <ul class="navbar-nav d-flex flex-row">
+        <a id="logo" href="{% url 'index' %}">
+            <img id="logo-img" src="{% static 'images/logo.jpg' %}" alt="Parking Booker Hub Logo"/>
+        </a>    <ul class="navbar-nav d-flex flex-row">
         {% if user.is_authenticated %}
             <!-- Navigation for logged-in users -->
             <li class="nav-item px-2">

@@ -20,7 +20,7 @@
 }
 
 .contact-info {
-    background-color: #f9f9f9;
+    background-color: rgba(0, 0, 0, 0.33);
     padding: 20px;
     border-radius: 10px;
     text-align: left;
@@ -29,7 +29,7 @@
 
 .contact-info h2 {
     font-size: 1.8rem;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 15px;
     border-bottom: 2px solid #007bff;
     padding-bottom: 5px;
@@ -141,3 +141,50 @@
 .alert-error {
     background-color: #dc3545;
 }
+
+/* General text color for the profile section */
+#profile-container {
+    color: white;
+}
+
+/* Specific styles for labels and spans within the profile container */
+#profile-container p {
+    color: white; /* White text for paragraphs */
+    font-size: 1.2rem;
+}
+
+#profile-container strong {
+    color: white; /* White text for labels like "Phone Number", "Email", etc. */
+    font-weight: bold;
+}
+
+/* Input field for editing phone number */
+#phone-edit {
+    color: white; /* White text in the input field */
+    background-color: transparent; /* Transparent background */
+    border: 1px solid white; /* White border */
+}
+
+/* Input placeholder text */
+#phone-edit::placeholder {
+    color: white; /* White placeholder text */
+    opacity: 0.7; /* Slightly lighter white for the placeholder */
+}
+
+/* Buttons for editing and saving */
+.edit-icon, .save-icon {
+    color: white; /* White icons */
+    background-color: transparent; /* Transparent background */
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.edit-icon:hover, .save-icon:hover {
+    transform: scale(1.1); /* Slight zoom-in effect on hover */
+    color: #45a29e; /* Cyan hover effect */
+}
+
+
+

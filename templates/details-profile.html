@@ -1,102 +1,111 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=\, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/styles/styles.css" />
-    <title>Travelers Hub</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    {#    <link rel="stylesheet" href="{% static 'css/navigation.css' %}"/>#}
+    <link rel="stylesheet" href="{% static 'css/details.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Parking Booker Hub - Profile</title>
 </head>
-
 <body>
-    <div id="wrapper">
-        <header>
-            <!-- Navigation -->
-
-            <!-- Logo image: a link to index/home page -->
-            <a id="logo" href="#">
-                <img id="logo-img" src="/static/images/logo-boeing.png" alt="logo" />
-            </a>
-
-            <nav>
-
-                <!-- If there is a traveler's profile -->
-
+<div id="wrapper">
+    <header>
+        <a id="logo" href="{% url 'index' %}">
+            <img id="logo-img" src="{% static 'images/logo.jpg' %}" alt="Parking Booker Hub Logo"/>
+        </a>
+        <nav>
+            {% if user.is_authenticated %}
                 <div class="user">
-                    <a href="#">All Trips</a>
-                    <a href="#">Share Trip</a>
-                    <a href="#">Traveler's Profile</a>
+                    <a href="{% url 'all-bookings' %}">All Bookings</a>
+                    <a href="{% url 'create_booking' %}">Create Booking</a>
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link">Logout</button>
+                    </form>
                 </div>
-
-                <!-- If the traveler's profile has NOT been created -->
-
+            {% else %}
                 <div class="guest">
-                    <a href="#">New Traveler's Profile</a>
+                    <a href="{% url 'create_profile' %}">Create Profile</a>
+                    <a href="{% url 'login' %}">Log In</a>
                 </div>
+            {% endif %}
+        </nav>
+    </header>
 
-            </nav>
-        </header>
+    <main>
+        <section id="profile-section">
+            <div id="profile-container">
+                <!-- Profile Picture -->
+                <form id="profile-form" method="post" action="{% url 'upload_profile_picture' %}"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="profile-picture-upload" id="profile-img-label">
+                        <img
+                                id="profile-img"
+                                src="
+                                        
+                                        
+                                        {% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}"
+                                alt="Profile Picture"
+                        />
+                    </label>
+                    <input
+                            type="file"
+                            id="profile-picture-upload"
+                            name="profile_picture"
+                            accept="image/*"
+                            style="display: none;"
+                            onchange="document.getElementById('profile-form').submit();"
+                    />
+                </form>
 
-        <main>
+                <!-- User Details -->
+                <h2 id="profile-name">{{ user.first_name }} {{ user.second_name }}</h2>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p>
+                    <strong>Phone Number:</strong>
+                    <span id="phone-display">{{ user.phone_number }}</span>
+                    <label for="phone-edit"><input
+                            type="text"
+                            id="phone-edit"
+                            value="{{ user.phone_number }}"
+                            style="display: none;"
+                    /></label>
+                    <button id="edit-phone-btn" class="edit-icon">
+                        <i class="fas fa-edit"></i> <!-- Font Awesome edit icon -->
+                    </button>
+                    <button id="save-phone-btn" class="save-icon" style="display: none;">
+                        <i class="fas fa-check"></i> <!-- Font Awesome check icon -->
+                    </button>
+                </p>
+                <p><strong>Nickname:</strong> {{ user.nickname }}</p>
+                <p><strong>Profile created on:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
 
-            <!-- Traveler's Profile Details Section -->
+                <!-- Action Buttons -->
+{#                <div id="profile-buttons">#}
+{#                    <a href="{% url 'edit_profile' %}" class="btn">Edit Profile</a>#}
+{#                </div>#}
+            </div>
+        </section>
+    </main>
+</div>
 
-            <section id="details">
-                <div id="details-wrapper">
-                    <h2>Traveler's Profile</h2>
-
-                    <!-- a default traveler's image -->
-                    <img id="details-img" src="/static/images/default-traveler.png" alt="profile img" />
-
-                    <!-- traveler's nickname -->
-                    <p id="details-title">MyNickname</p>
-
-                    <!-- traveler's email and country -->
-                    <p id="nutrition"><span>Email: </span>test@test.com<span> Country: </span>BGR</p>
-
-                    <div id="info-wrapper">
-                        <div id="details-description">
-
-                            <!-- info (about me) if provided, skip it if there is no info -->
-                            <p><span>About me: </span>I’ve got a soft spot for sunrises on mountaintops and sunsets by
-                                the ocean. Traveling fuels my creativity and keeps me grounded at the same time. Always
-                                planning my next escape!
-                            </p>
-
-                            <!-- if there are trips - list data; skip if no trips -->
-                            <p><span>Shared Trips:</span></p>
-
-                            <!-- <ul> element containing all trips, ordered by start_date descending -->
-                            <ul>
-                                <!-- <li> element for each trip's data in the format: "{destination}: {duration} day/s, started on: {start_date}" -->
-                                <!-- trip 1-->
-                                <li>Cusco, Peru: 10 day/s, started on: 2024-11-08</li>
-                                <!-- trip 2-->
-                                <li>Reykjavik, Iceland: 3 day/s, started on: 2024-10-31</li>
-                                <!-- trip 3-->
-                                <li>Kyoto, Japan: 5 day/s, started on: 2024-10-17</li>
-                                <!-- trip 4-->
-                                <li>London, UK: 2 day/s, started on: 2024-10-13</li>
-
-                            </ul>
-
-                        </div>
-                        <!--Edit and Delete buttons -->
-                        <div id="action-buttons">
-                            <a href="#" id="edit-btn">Edit</a>
-                            <a href="#" id="delete-btn">Delete</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-    </div>
-    <!-- footer -->
-    <footer>
-        <p>&copy; 2024 Travelers Hub by SoftUni Team. All rights reserved.</p>
-    </footer>
+<footer>
+    <p>&copy; 2024 Parking Booker Hub. All rights reserved.</p>
+</footer>
 </body>
-
 </html>
+
+
+<!-- Update Phone Number AJAX request URL -->
+<script>
+    const updatePhoneNumberUrl = "{% url 'update_phone_number' %}";
+</script>
+<script src="{% static 'scripts/edit-button.js' %}"></script>
+

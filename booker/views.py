@@ -3,6 +3,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+# For the button
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 from booker.forms import AccountForm
 
 
@@ -58,6 +63,47 @@ def create_profile(request):
     return render(request, "create-profile.html", {'form': form})
 
 
-
 def profile(request):
-    return render(request, 'delete-profile.html')
+    return render(request, 'details-profile.html')
+
+
+# def edit_profile(request):
+#     return render(request, 'edit-profile.html')
+
+def upload_profile_picture(request):
+    if request.method == "POST" and request.FILES.get("profile_picture"):
+        profile_picture = request.FILES["profile_picture"]
+
+        # Validate file size (10MB = 10 * 1024 * 1024 bytes)
+        if profile_picture.size > 10 * 1024 * 1024:
+            messages.error(request, "File size must not exceed 10MB.")
+            return redirect("profile")
+
+        # Update user's profile picture
+        request.user.profile_picture = profile_picture
+        request.user.save()
+        messages.success(request, "Profile picture updated successfully!")
+        return redirect("profile")
+
+    return redirect("profile")
+
+
+@csrf_exempt
+def update_phone_number(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            phone_number = data.get("phone_number")
+
+            # Validate phone number (optional)
+            if not phone_number.isdigit() or len(phone_number) != 10:
+                return JsonResponse({"error": "Invalid phone number."}, status=400)
+
+            user = request.user
+            user.phone_number = phone_number
+            user.save()
+
+            return JsonResponse({"phone_number": user.phone_number})
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    return JsonResponse({"error": "Invalid request method."}, status=405)
