@@ -22,6 +22,19 @@ def create_booking(request):
 
 
 def login_view(request):
+    if request.method == 'POST':
+        nickname = request.POST.get('nickname')
+        password = request.POST.get('password')
+        # print(f"Nickname: {nickname}, Password: {password}")
+        user = authenticate(request, nickname=nickname, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "You have successfully logged in!")
+            return redirect('all-bookings')
+        else:
+            messages.error(request, "Invalid username or password!")
+
     return render(request, "login.html")
 
 

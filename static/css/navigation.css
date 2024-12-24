@@ -138,3 +138,48 @@ footer p {
     transform: rotate(15deg) scale(1.05); /* Slight tilt and zoom on hover */
 }
 
+
+
+/* Logout */
+/* General styles for nav links */
+nav a,
+nav button {
+    font-size: 1.4rem;
+    color: var(--nav-link); /* Subtle link color */
+    font-family: var(--font-heading); /* Use defined heading font variable */
+    font-weight: 500;
+    margin: 0 10px;
+    transition: color 0.3s ease, font-size 0.2s ease;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer; /* Make the button behave like a link */
+    text-decoration: none;
+}
+
+/* Hover effect for nav links */
+nav a:hover,
+nav button:hover {
+    color: var(--nav-hover); /* Cyan glow on hover */
+    text-decoration: underline;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+/* Specific styles for the Logout button to inherit nav link styles */
+nav button {
+    all: unset; /* Reset button styles */
+    font-size: 1.4rem; /* Match nav link font size */
+    font-family: var(--font-heading);
+    font-weight: 500;
+    color: var(--nav-link); /* Same color as nav links */
+    cursor: pointer; /* Pointer cursor for interaction */
+}
+
+/* Hover effect for Logout button */
+nav button:hover {
+    color: var(--nav-hover); /* Same hover color as nav links */
+    text-decoration: underline;
+    font-size: 1.6rem; /* Same hover font size as nav links */
+    font-weight: 600;
+}

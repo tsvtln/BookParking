@@ -30,6 +30,16 @@
             <li class="nav-item px-2">
                 <a class="nav-link" href="{% url 'create_booking' %}">Create Booking</a>
             </li>
+            <!-- Logout Button -->
+            <li class="nav-item px-2">
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link">Logout</button>
+                </form>
+            </li>
+
+
+
         {% else %}
             <!-- Navigation for non-logged-in users -->
             <li class="nav-item px-2">
@@ -41,9 +51,9 @@
         {% endif %}
     </ul>
 </nav>
-<p>DEBUG</p>
-<p>User Authenticated: {{ user.is_authenticated }}</p>
-<p>Username: {{ user.nickname }}</p>
+{#<p>DEBUG</p>#}
+{#<p>User Authenticated: {{ user.is_authenticated }}</p>#}
+{#<p>Username: {{ user.nickname }}</p>#}
 <!-- Carousel -->
 <div class="container">
     <div id="sliding_images" class="carousel slide" data-ride="carousel">

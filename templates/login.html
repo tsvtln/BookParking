@@ -1,10 +1,52 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Login</title>
 </head>
 <body>
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        <div>
+            <label for="nickname">Nickname:</label>
+            <input type="text" name="nickname" id="nickname" placeholder="Enter your nickname" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
 
+
+    {#    login debug#}
+{#    <form method="post" action="">#}
+    {#        {% csrf_token %}#}
+    {#        <label>#}
+    {#            <input type="text" name="nickname" placeholder="Enter your nickname" required>#}
+    {#        </label>#}
+    {#        <label>#}
+    {#            <input type="password" name="password" placeholder="Enter your password" required>#}
+    {#        </label>#}
+    {#        <button type="submit">Log In</button>#}
+    {#    </form>#}
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <p>Don't have an account? <a href="{% url 'create_profile' %}">Create one here</a>.</p>
+</div>
 </body>
 </html>
