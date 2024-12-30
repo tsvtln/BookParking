@@ -23,35 +23,47 @@ def index(request):
 
 # @login_required
 def all_bookings(request):
-    # Get year and month from query params (defaults to current month/year)
+    # get year, month, and day from query params (defaults to current date)
     year = request.GET.get('year', datetime.now().year)
     month = request.GET.get('month', datetime.now().month)
+    day = request.GET.get('day', None)  # optional day selection
 
-    # Ensure year and month are integers
     try:
         year = int(year)
         month = int(month)
+        if day:
+            day = int(day)
     except ValueError:
         year = datetime.now().year
         month = datetime.now().month
+        day = None
 
-    # Get the number of days in the selected month
     _, num_days = monthrange(year, month)
 
-    # Get all bookings for the given month/year
-    bookings = Booking.objects.filter(date__year=year, date__month=month).select_related('user')
+    # base query: filter by year and month
+    query = Booking.objects.filter(date__year=year, date__month=month)
 
-    # Prepare data for the template
+    # further filter by day if it's selected
+    if day:
+        query = query.filter(date__day=day)
+
+    # order the bookings by date and user
+    bookings = query.order_by('date', 'user__nickname')
+
+    # prepare data for the template
     context = {
         'bookings': bookings,
         'current_year': year,
         'current_month': month,
+        'current_day': day,
         'num_days': num_days,
-        'months': [  # Month names for the dropdown
+        'months': [  # Month names for dropdown
             'January', 'February', 'March', 'April', 'May', 'June',
             'July', 'August', 'September', 'October', 'November', 'December'
         ],
-        'years': range(datetime.now().year - 5, datetime.now().year + 5)  # 5 years range
+        # 1 year backtrack and 5 years ahead, although current logic doesn't allow further than 365days
+        'years': range(datetime.now().year - 1, datetime.now().year + 5),
+        'days': range(1, num_days + 1)  # Days in the current month
     }
 
     return render(request, 'all-bookings.html', context)
@@ -217,14 +229,14 @@ def update_phone_number(request):
     return JsonResponse({"error": "Invalid request method."}, status=405)
 
 
-# debug
-def test_login_view(request):
-    # Replace with a valid query for a user
-    user = Account.objects.filter(nickname="tsvtln").first()
-    if not user:
-        return HttpResponse("No user found to log in", status=404)
-    login(request, user)  # Log in the user
-    return HttpResponse(f"User {request.user} is now logged in")
+""" Debug page for testing login functionalities."""
+# def test_login_view(request):
+#     # Replace with a valid query for a user
+#     user = Account.objects.filter(nickname="tsvtln").first()
+#     if not user:
+#         return HttpResponse("No user found to log in", status=404)
+#     login(request, user)  # Log in the user
+#     return HttpResponse(f"User {request.user} is now logged in")
 
 
 def check_availability(request):

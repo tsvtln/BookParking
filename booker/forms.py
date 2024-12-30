@@ -93,7 +93,7 @@ class AccountForm(forms.ModelForm):
 
     def save(self, commit=True):
         account = super().save(commit=False)
-        account.password = make_password(self.cleaned_data['password'])  # Hash the password
+        account.password = make_password(self.cleaned_data['password'])  # hash the password, much secure
         if commit:
             account.save()
         return account
@@ -111,9 +111,10 @@ class BookingForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)  # Pop the user from kwargs
+        self.user = kwargs.pop('user', None)  # pop the user from kwargs
         super().__init__(*args, **kwargs)
 
+    """ this breaks the booking saving in the front end """
     # def clean(self):
     #
     #

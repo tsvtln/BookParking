@@ -1,0 +1,101 @@
+
+/*body {*/
+/*    font-family: 'Poppins', Arial, sans-serif;*/
+/*    background-image: url("static/images/homepage_main_background_edited.png");*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    color: #fff;*/
+/*}*/
+
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+.container h1 {
+    font-family: 'Orbitron', Georgia, sans-serif;
+    font-size: 2.5rem;
+    color: #00aaff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.dropdowns {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.dropdowns select, .dropdowns button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.dropdowns select {
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+}
+
+.dropdowns select:hover {
+    background: rgba(255, 255, 255, 1);
+    color: #000;
+}
+
+.dropdowns button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.dropdowns button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background: #333;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+table tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.no-bookings {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    color: #ffa500;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}

@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as gl
 from django.core.validators import RegexValidator
 from django.contrib.auth.hashers import make_password
@@ -100,7 +99,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
 class ParkingSpace(models.Model):
     """
     A single record representing the universal number of parking spaces
-    available each day (e.g., 50). We expect only 1 row in this table.
+    available each day (e.g., 42). We expect only 1 row in this table.
     """
     total_spaces = models.PositiveIntegerField(
         help_text='Total number of parking spaces available each day.'
@@ -155,12 +154,12 @@ class ParkingAvailability(models.Model):
         (the single record in the ParkingSpace table).
         """
         if not self.pk:  # only on create
-            # Grab the single ParkingSpace record (assuming only 1 record)
+            # grab the single ParkingSpace record (assuming only 1 record)
             space_record = ParkingSpace.objects.first()
             if not space_record:
                 raise ValidationError("No ParkingSpace record found. Please create one first.")
 
-            # Use total_spaces from ParkingSpace as default
+            # use total_spaces from ParkingSpace as default
             self.available_spaces = space_record.total_spaces
 
         super().save(*args, **kwargs)

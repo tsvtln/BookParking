@@ -1,2 +1,135 @@
-<p>User Authenticated: {{ user.is_authenticated }}</p>
-<p>Username: {{ user.nickname }}</p>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Bookings</title>
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/navigation.css' %}" rel="stylesheet">
+    <link href="{% static 'css/all-bookings.css' %}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-image: url("{% static 'images/homepage_main_background_edited.png' %}");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-light bg-light">
+    <a id="logo" href="{% url 'index' %}">
+        <img id="logo-img" src="{% static 'images/logo.jpg' %}" alt="Parking Booker Hub Logo"/>
+    </a>
+    <ul class="navbar-nav d-flex flex-row">
+        {% if user.is_authenticated %}
+            <!-- Navigation for logged-in users -->
+{#            <li class="nav-item px-2">#}
+{#                <a class="nav-link" href="{% url 'all-bookings' %}">All Bookings</a>#}
+{#            </li>#}
+            <li class="nav-item px-2">
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item px-2">
+                <a class="nav-link" href="{% url 'create_booking' %}">Create Booking</a>
+            </li>
+            <!-- Logout Button -->
+            <li class="nav-item px-2">
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link">Logout</button>
+                </form>
+            </li>
+
+
+
+        {% else %}
+            <!-- Navigation for non-logged-in users -->
+            <li class="nav-item px-2">
+                <a class="nav-link" href="{% url 'create_profile' %}">Create Profile</a>
+            </li>
+            <li class="nav-item px-2">
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>All Bookings</h1>
+
+    <!-- Dropdowns for selecting year, month, and day -->
+    <div class="dropdowns">
+        <select id="year-selector">
+            {% for year in years %}
+                <option value="{{ year }}" {% if year == current_year %}selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+        <select id="month-selector">
+            {% for month in months %}
+                <option value="{{ forloop.counter }}"
+                        {% if forloop.counter == current_month %}selected{% endif %}>{{ month }}</option>
+            {% endfor %}
+        </select>
+        <select id="day-selector">
+            <option value="all" selected>All Days</option>
+            {% for day in days %}
+                <option value="{{ day }}" {% if day == current_day %}selected{% endif %}>{{ day }}</option>
+            {% endfor %}
+        </select>
+        <button id="update-calendar"><i class="fas fa-calendar"></i> Update</button>
+    </div>
+
+    <!-- Bookings Table -->
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>User</th>
+        </tr>
+        </thead>
+        <tbody id="bookings-table">
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.user.nickname }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="no-bookings">No bookings found for this period.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; 2024 Parking Booker Hub. All rights reserved to ProNetGaming.</p>
+</footer>
+
+<script>
+    $(document).ready(function () {
+        $('#update-calendar').on('click', function () {
+            const selectedYear = $('#year-selector').val();
+            const selectedMonth = $('#month-selector').val();
+            const selectedDay = $('#day-selector').val();
+            let url = `?year=${selectedYear}&month=${selectedMonth}`;
+            if (selectedDay !== 'all') {
+                url += `&day=${selectedDay}`;
+            }
+            window.location.href = url;
+        });
+    });
+</script>
+</body>
+</html>
