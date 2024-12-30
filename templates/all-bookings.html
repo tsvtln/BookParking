@@ -34,9 +34,9 @@
     <ul class="navbar-nav d-flex flex-row">
         {% if user.is_authenticated %}
             <!-- Navigation for logged-in users -->
-{#            <li class="nav-item px-2">#}
-{#                <a class="nav-link" href="{% url 'all-bookings' %}">All Bookings</a>#}
-{#            </li>#}
+            {#            <li class="nav-item px-2">#}
+            {#                <a class="nav-link" href="{% url 'all-bookings' %}">All Bookings</a>#}
+            {#            </li>#}
             <li class="nav-item px-2">
                 <a class="nav-link" href="{% url 'profile' %}">Profile</a>
             </li>
@@ -91,6 +91,26 @@
     </div>
 
     <!-- Bookings Table -->
+    {#    <table>#}
+    {#        <thead>#}
+    {#        <tr>#}
+    {#            <th>Date</th>#}
+    {#            <th>User</th>#}
+    {#        </tr>#}
+    {#        </thead>#}
+    {#        <tbody id="bookings-table">#}
+    {#        {% for booking in bookings %}#}
+    {#            <tr>#}
+    {#                <td>{{ booking.date }}</td>#}
+    {#                <td>{{ booking.user.nickname }}</td>#}
+    {#            </tr>#}
+    {#            {% empty %}#}
+    {#            <tr>#}
+    {#                <td colspan="2" class="no-bookings">No bookings found for this period.</td>#}
+    {#            </tr>#}
+    {#        {% endfor %}#}
+    {#        </tbody>#}
+    {#    </table>#}
     <table>
         <thead>
         <tr>
@@ -102,11 +122,15 @@
         {% for booking in bookings %}
             <tr>
                 <td>{{ booking.date }}</td>
-                <td>{{ booking.user.nickname }}</td>
+                <td>
+                    <a href="{% url 'view_user_profile' booking.user.id %}">
+                        {{ booking.user.nickname }} ➤ {{ booking.user.first_name }} {{ booking.user.second_name }}
+                    </a>
+                </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="2" class="no-bookings">No bookings found for this period.</td>
+                <td colspan="2" class="no-bookings">No bookings found for this month.</td>
             </tr>
         {% endfor %}
         </tbody>

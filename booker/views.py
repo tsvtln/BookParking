@@ -251,3 +251,7 @@ def check_availability(request):
         return JsonResponse({'available_spaces': availability.available_spaces})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+def view_user_profile(request, user_id):
+    user = get_object_or_404(Account, id=user_id)
+    return render(request, 'user-profile.html', {'user': user})

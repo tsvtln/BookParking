@@ -15,6 +15,7 @@ urlpatterns = [
     path("update-phone-number/", views.update_phone_number, name="update_phone_number"),
     path('login/', views.login_view, name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
+    path('user/<int:user_id>/', views.view_user_profile, name='view_user_profile'),
     path('check-availability/', views.check_availability, name='check_availability')
     # debug url
     # path("test-login/", views.test_login_view, name='test_login')

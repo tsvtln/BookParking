@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.nickname }}'s Profile</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user-profile.css' %}">
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-image: url("{% static 'images/homepage_main_background_edited.png' %}");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>{{ user.nickname }}'s Profile</h1>
+    {% if user.profile_picture %}
+        <img src="{{ user.profile_picture.url }}" alt="{{ user.nickname }}'s Profile Picture"
+             style="max-width: 150px; border-radius: 50%; margin-bottom: 20px;">
+    {% else %}
+        <img src="{% static 'images/default-profile.png' %}" alt="Default Profile Picture"
+             style="max-width: 150px; border-radius: 50%; margin-bottom: 20px;">
+    {% endif %}
+    <p><strong>First Name:</strong> {{ user.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ user.second_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Phone:</strong> {{ user.phone_number }}</p>
+    <p><strong>Last Login:</strong>{{ user.last_login }}</p>
+    <a href="{% url 'all-bookings' %}">Back to All Bookings</a>
+</div>
+<footer>
+    <p>&copy; 2024 Parking Booker Hub. All rights reserved to ProNetGaming.</p>
+</footer>
+</body>
+</html>
