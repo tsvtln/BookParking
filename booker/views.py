@@ -1,3 +1,6 @@
+from calendar import monthrange
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login, get_user_model
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect, get_object_or_404
@@ -20,7 +23,38 @@ def index(request):
 
 # @login_required
 def all_bookings(request):
-    return render(request, "all-bookings.html")
+    # Get year and month from query params (defaults to current month/year)
+    year = request.GET.get('year', datetime.now().year)
+    month = request.GET.get('month', datetime.now().month)
+
+    # Ensure year and month are integers
+    try:
+        year = int(year)
+        month = int(month)
+    except ValueError:
+        year = datetime.now().year
+        month = datetime.now().month
+
+    # Get the number of days in the selected month
+    _, num_days = monthrange(year, month)
+
+    # Get all bookings for the given month/year
+    bookings = Booking.objects.filter(date__year=year, date__month=month).select_related('user')
+
+    # Prepare data for the template
+    context = {
+        'bookings': bookings,
+        'current_year': year,
+        'current_month': month,
+        'num_days': num_days,
+        'months': [  # Month names for the dropdown
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ],
+        'years': range(datetime.now().year - 5, datetime.now().year + 5)  # 5 years range
+    }
+
+    return render(request, 'all-bookings.html', context)
 
 
 @login_required

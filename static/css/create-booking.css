@@ -1,0 +1,124 @@
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background-image: url("static/images/homepage_main_background_edited.png");
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.container h1 {
+    font-family: 'Orbitron', Georgia, sans-serif;
+    font-size: 2.5rem;
+    color: #00aaff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+form input[type="date"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+form input[type="date"]:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.8);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/*form button {*/
+/*    background-color: #007bff;*/
+/*    color: #fff;*/
+/*    border: none;*/
+/*    padding: 10px 20px;*/
+/*    border-radius: 5px;*/
+/*    font-size: 1.2rem;*/
+/*    font-family: 'Kaushan Script', cursive;*/
+/*    cursor: pointer;*/
+/*    transition: background-color 0.3s, transform 0.2s;*/
+/*}*/
+
+/*form button:hover {*/
+/*    background-color: #0056b3;*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+#availability-info {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #00aaff;
+    font-style: italic;
+}
+
+a {
+    color: #00aaff;
+    font-size: 1.2rem;
+    font-family: 'Lobster Two', cursive;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+a:hover {
+    color: #0056b3;
+    text-shadow: 0 0 8px #00aaff;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: var(--nav-link); /* Use navbar link color */
+    font-size: 1.4rem;
+    font-family: 'Orbitron', sans-serif; /* Matches the navbar font */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+    color: var(--nav-hover); /* Glow effect */
+    text-decoration: underline;
+    transform: scale(1.1);
+}
+
+.create-booking-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-family: 'Kaushan Script', cursive;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.create-booking-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
