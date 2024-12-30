@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as gl
 from django.core.validators import RegexValidator
 from django.contrib.auth.hashers import make_password
@@ -42,10 +43,10 @@ class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         max_length=100,
         unique=True,
-        help_text="Email address must be unique.",
+        help_text="*Email address must be unique.",
     )
-    first_name = models.CharField(max_length=30, help_text="Your first name.")
-    second_name = models.CharField(max_length=30, help_text="Your last name.")
+    first_name = models.CharField(max_length=30)
+    second_name = models.CharField(max_length=30)
     phone_number = models.CharField(
         max_length=10,
         unique=True,
@@ -86,15 +87,51 @@ class Account(AbstractBaseUser, PermissionsMixin):
         return f"{self.first_name} ({self.nickname}) {self.second_name}"
 
 
+# class ParkingSpace(models.Model):
+#     total_spaces = models.PositiveIntegerField(
+#         help_text='Total number of parking spaces available each day.'
+#     )
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+#
+#     def __str__(self):
+#         return f"Parking Space {self.total_spaces} total spaces left."
+
 class ParkingSpace(models.Model):
+    """
+    A single record representing the universal number of parking spaces
+    available each day (e.g., 50). We expect only 1 row in this table.
+    """
     total_spaces = models.PositiveIntegerField(
         help_text='Total number of parking spaces available each day.'
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        if ParkingSpace.objects.exists() and not self.pk:
+            raise ValidationError("You have to edit or remove the previous configuration of available spaces.")
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"Parking Space {self.total_spaces} total spaces left."
+
+
+# class ParkingAvailability(models.Model):
+#     date = models.DateField(
+#         unique=True,
+#         help_text='The date for which availability is being tracked.'
+#     )
+#
+#     available_spaces = models.PositiveIntegerField(
+#         help_text="Number of spaces available for parking spaces for this day."
+#     )
+#
+#     class Meta:
+#         ordering = ['date']
+#
+#     def __str__(self):
+#         return f'{self.date}: {self.available_spaces}'
 
 
 class ParkingAvailability(models.Model):
@@ -102,9 +139,8 @@ class ParkingAvailability(models.Model):
         unique=True,
         help_text='The date for which availability is being tracked.'
     )
-
     available_spaces = models.PositiveIntegerField(
-        help_text="Number of spaces available for parking spaces for this day."
+        help_text="Number of spaces available for this day."
     )
 
     class Meta:
@@ -112,6 +148,22 @@ class ParkingAvailability(models.Model):
 
     def __str__(self):
         return f'{self.date}: {self.available_spaces}'
+
+    def save(self, *args, **kwargs):
+        """
+        If creating a record, default available_spaces to ParkingSpace.total_spaces
+        (the single record in the ParkingSpace table).
+        """
+        if not self.pk:  # only on create
+            # Grab the single ParkingSpace record (assuming only 1 record)
+            space_record = ParkingSpace.objects.first()
+            if not space_record:
+                raise ValidationError("No ParkingSpace record found. Please create one first.")
+
+            # Use total_spaces from ParkingSpace as default
+            self.available_spaces = space_record.total_spaces
+
+        super().save(*args, **kwargs)
 
 
 class Booking(models.Model):
@@ -122,13 +174,35 @@ class Booking(models.Model):
         help_text="The user who booked this booking.",
     )
 
-    date = models.DateField(
-        help_text="The date for the parking is booked.",
-    )
+    date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def clean(self):
+
+        if not hasattr(self, 'user') or not self.user or not self.user.pk:
+            print("Skipping user-dependent validation in clean()")
+            return
+
+        # debug stuff
+        if not self.user or not self.user.pk:
+            raise ValidationError("User must be assigned before validation.")
+
+        if Booking.objects.filter(user=self.user, date=self.date).exists():
+            raise ValidationError("You have already booked a parking space for this date.")
+
+        availability = ParkingAvailability.objects.filter(date=self.date).first()
+        if not availability:
+            raise ValidationError("No parking spaces available for this date!")
+
+        if availability.available_spaces <= 0:
+            raise ValidationError("No spaces available for this date!")
+
+
+        # allow only 1 booking of a date per user
+        if Booking.objects.filter(user=self.user, date=self.date).exists():
+            raise ValidationError(gl('You have already booked a parking space for this date.'))
+
         availability = ParkingAvailability.objects.filter(date=self.date).first()
         if not availability:
             raise ValidationError(gl('No parking spaces available for this date!'))
@@ -138,10 +212,17 @@ class Booking(models.Model):
 
     def save(self, *args, **kwargs):
 
+        self.clean()
+
+        # a lazy workaround if no value for parking spaces is preset
+        space_record = ParkingSpace.objects.first()
+        if not space_record:
+            raise ValidationError("No ParkingSpace configured. Contact admin.")
+
         # availability check for the date
         availability, created = ParkingAvailability.objects.get_or_create(
             date=self.date,
-            defaults={'available_spaces': ParkingSpace.objects.first().total_spaces},
+            defaults={'available_spaces': space_record.total_spaces},
         )
 
         # check bf4 saving
@@ -164,5 +245,7 @@ class Booking(models.Model):
         super().delete(*args, **kwargs)
 
     def __str__(self):
-        return f'Booking by {self.user.username} for {self.date}'
+        return f'Booking by {self.user.nickname} for {self.date}'
+
+
 

@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Bookings</title>
+
+    <!-- CSS -->
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/navigation.css' %}" rel="stylesheet">
+    <link href="{% static 'css/my-bookings.css' %}" rel="stylesheet">
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-light bg-light">
+    <a id="logo" href="{% url 'index' %}">
+        <img id="logo-img" src="{% static 'images/logo.jpg' %}" alt="Parking Booker Hub Logo"/>
+    </a>
+    <ul class="navbar-nav d-flex flex-row">
+        {% if user.is_authenticated %}
+            <li class="nav-item px-2">
+                <a class="nav-link" href="{% url 'all-bookings' %}">All Bookings</a>
+            </li>
+            <li class="nav-item px-2">
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item px-2">
+                <a class="nav-link" href="{% url 'create_booking' %}">Create Booking</a>
+            </li>
+            <li class="nav-item px-2">
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link">Logout</button>
+                </form>
+            </li>
+        {% else %}
+            <li class="nav-item px-2">
+                <a class="nav-link" href="{% url 'create_profile' %}">Create Profile</a>
+            </li>
+            <li class="nav-item px-2">
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+<!-- Main Content -->
+<div class="content-container">
+    <h1 class="title">My Bookings</h1>
+    <table class="booking-table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.date }}</td>
+                <td>
+                    <form method="post" action="{% url 'delete_booking' booking.id %}">
+                        {% csrf_token %}
+                        <button class="delete-btn">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No bookings.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'create_booking' %}" class="create-booking-link">Create a New Booking</a>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="social-links">
+        <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+</footer>
+
+<script src="{% static 'scripts/jquery.min.js' %}"></script>
+<script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+<script src="{% static 'scripts/scripts.js' %}"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+</body>
+</html>

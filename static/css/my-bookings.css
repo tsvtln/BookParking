@@ -1,0 +1,120 @@
+/* Fonts */
+:root {
+    --font-primary: 'Poppins', 'Arial', sans-serif;
+    --font-heading: 'Orbitron', 'Georgia', sans-serif;
+    --font-accent: 'Lobster Two', 'Verdana', cursive;
+    --font-script: 'Kaushan Script', 'Brush Script MT', cursive; /* Script font for buttons */
+}
+
+/* Booking Table */
+.content-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: #b0bce3;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.booking-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 80%;
+    text-align: center;
+    background: #333333;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition effects */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+.booking-table th,
+.booking-table td {
+    padding: 15px;
+    border: 1px solid #ccc;
+    font-family: var(--font-primary);
+}
+
+.booking-table th {
+    background: #222;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: var(--font-heading); /* Use heading font for headers */
+    letter-spacing: 1px;
+}
+
+.booking-table tr {
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.booking-table tr:hover {
+    background-color: #2d2a2a; /* Slightly darker hover background */
+}
+
+.booking-table:hover {
+    transform: scale(1.02); /* Slight pop-out effect on hover */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+}
+
+.booking-table tr:hover {
+    background-color: #251c1c;
+}
+
+.delete-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* Slightly enlarge button on hover */
+}
+
+.create-booking-link {
+    font-family: var(--font-accent); /* Accent font for the link */
+    font-size: 1.5rem;
+    color: #007bff;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+    position: relative; /* For the sparkle effect */
+    overflow: hidden; /* Contain sparkles within the link */
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transition effects */
+}
+
+.create-booking-link:hover {
+    text-decoration: underline;
+    color: #0056b3; /* Darker blue on hover */
+    text-shadow: 0 0 8px #00aaff; /* Glow effect */
+}
+
+.create-booking-link:hover::after {
+    content: ''; /* Create sparkles */
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    filter: blur(3px);
+    animation: sparkle-animation 2s infinite; /* Infinite sparkle movement */
+}
+
+@keyframes sparkle-animation {
+    0% {
+        left: -50%;
+    }
+    100% {
+        left: 100%;
+    }
+}

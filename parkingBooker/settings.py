@@ -87,11 +87,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'booker.authenticator.AccountBackend',  # Your custom backend
+    'booker.authenticator.AccountBackend',
+    'django.contrib.auth.backends.ModelBackend',  # Default Django backend
 ]
 AUTH_USER_MODEL = "booker.Account"
 
-
+# LOGGING = {
+#     'version': 1,
+#     'handlers': {'console': {'class': 'logging.StreamHandler'}},
+#     'loggers': {
+#         'django.db.backends': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         },
+#     },
+# }
 
 
 # Internationalization

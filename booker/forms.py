@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
-from booker.models import Account
+from booker.models import Account, Booking
 
 
 class AccountForm(forms.ModelForm):
@@ -97,3 +97,34 @@ class AccountForm(forms.ModelForm):
         if commit:
             account.save()
         return account
+
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['date']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }
+        labels = {
+            'date': 'Select a date for your booking',
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # Pop the user from kwargs
+        super().__init__(*args, **kwargs)
+
+    # def clean(self):
+    #
+    #
+    #
+    #     cleaned_data = super().clean()
+    #     date = cleaned_data.get('date')
+    #
+    #     if not self.user:
+    #         raise ValidationError("User is required to make a booking.")
+    #
+    #     if Booking.objects.filter(user=self.user, date=date).exists():
+    #         raise ValidationError("You have already booked a parking space for this date.")
+    #
+    #     return cleaned_data

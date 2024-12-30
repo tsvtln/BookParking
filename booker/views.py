@@ -1,14 +1,17 @@
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, get_user_model
+from django.core.exceptions import ValidationError
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # For the button
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+from django.urls.base import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-from booker.forms import AccountForm
+from booker.forms import AccountForm, BookingForm
+from booker.models import Booking, Account, ParkingAvailability
 
 
 def index(request):
@@ -22,8 +25,80 @@ def all_bookings(request):
 
 @login_required
 def create_booking(request):
-    # Logic for creating a booking
-    return render(request, "create-booking.html")
+    if request.method == "POST":
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            print(f"Assigning user {request.user} to booking.")
+            booking.user = request.user  # Assign the logged-in user
+            try:
+                booking.full_clean()  # Run validation after assigning the user
+                booking.save()  # Save the booking
+                print(f"Booking created for user {booking.user}")
+                messages.success(request, "Booking created successfully!")
+                return redirect("view_bookings")
+            except ValidationError as e:
+                form.add_error(None, e.messages)
+            except Exception as e:
+                form.add_error(None, str(e))
+    else:
+        form = BookingForm()
+
+    return render(request, "create-booking.html", {"form": form})
+
+# @login_required
+# def create_booking(request):
+#     # Resolve the user explicitly
+#     request.user = get_user_model().objects.get(pk=request.user.pk)
+#
+#     if not request.user.is_authenticated:
+#         return HttpResponse("User is not authenticated", status=401)
+#
+#     if request.method == "POST":
+#         form = BookingForm(request.POST)
+#         if form.is_valid():
+#             booking = form.save(commit=False)
+#             print(f"Assigning user {request.user} to booking.")
+#             booking.user = request.user  # Set the logged-in user
+#             print(f"This is the booking.user {booking.user}")
+#             try:
+#                 booking.save()
+#                 messages.success(request, "Booking created successfully!")
+#                 return redirect("view_bookings")
+#             except ValidationError as e:
+#                 form.add_error(None, e.messages)
+#             except Exception as e:
+#                 form.add_error(None, str(e))
+#     else:
+#         form = BookingForm()
+#
+#
+#     from django.utils.encoding import force_str
+#
+#     resolved_user = force_str(request.user)
+#     print(f"Resolved User: {resolved_user}, Type: {type(resolved_user)}")
+#
+#     if request.user.is_authenticated:
+#         print(f"Authenticated User: {request.user}, Type: {type(request.user)}")
+#     else:
+#         print("User is not authenticated")
+#
+#     return render(request, "create-booking.html", {"form": form})
+
+
+
+@login_required
+def view_bookings(request):
+    bookings = Booking.objects.filter(user=request.user).order_by('date')
+    return render(request, "view-bookings.html", {"bookings": bookings})
+
+
+@login_required
+def delete_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    booking.delete()
+    messages.success(request, "Booking deleted successfully!")
+    return HttpResponseRedirect(reverse('view_bookings'))
 
 
 def login_view(request):
@@ -95,7 +170,6 @@ def update_phone_number(request):
             data = json.loads(request.body)
             phone_number = data.get("phone_number")
 
-            # Validate phone number (optional)
             if not phone_number.isdigit() or len(phone_number) != 10:
                 return JsonResponse({"error": "Invalid phone number."}, status=400)
 
@@ -107,3 +181,27 @@ def update_phone_number(request):
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
     return JsonResponse({"error": "Invalid request method."}, status=405)
+
+
+# debug
+def test_login_view(request):
+    # Replace with a valid query for a user
+    user = Account.objects.filter(nickname="tsvtln").first()
+    if not user:
+        return HttpResponse("No user found to log in", status=404)
+    login(request, user)  # Log in the user
+    return HttpResponse(f"User {request.user} is now logged in")
+
+
+def check_availability(request):
+    date = request.GET.get('date')
+    if not date:
+        return JsonResponse({'error': 'No date provided'}, status=400)
+
+    try:
+        availability = ParkingAvailability.objects.filter(date=date).first()
+        if not availability:
+            return JsonResponse({'available_spaces': 0})
+        return JsonResponse({'available_spaces': availability.available_spaces})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

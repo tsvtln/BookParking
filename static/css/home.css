@@ -1,6 +1,9 @@
 body {
     background-image: url('/static/images/homepage_main_background_edited.png');
     background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #fff
 }
 
 .container-inline {
