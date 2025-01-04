@@ -1,6 +1,12 @@
 from django.contrib.auth.views import LogoutView
 from django.urls import path
+from django.views.generic import RedirectView
+
 from booker import views
+
+from django.views.static import serve
+from django.conf import settings
+from django.urls import re_path
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -16,8 +22,8 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('user/<int:user_id>/', views.view_user_profile, name='view_user_profile'),
-    path('check-availability/', views.check_availability, name='check_availability')
-    # debug url
+    path('check-availability/', views.check_availability, name='check_availability'),
+    re_path(r'^favicon\.ico$', serve, {'document_root': settings.BASE_DIR, 'path': 'favicon.ico'}),    # debug url
     # path("test-login/", views.test_login_view, name='test_login')
 ]
 
