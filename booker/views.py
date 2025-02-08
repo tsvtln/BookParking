@@ -1,14 +1,14 @@
 from calendar import monthrange
 from datetime import datetime
 
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # For the button
-from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.urls.base import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -92,46 +92,6 @@ def create_booking(request):
 
     return render(request, "create-booking.html", {"form": form})
 
-# @login_required
-# def create_booking(request):
-#     # Resolve the user explicitly
-#     request.user = get_user_model().objects.get(pk=request.user.pk)
-#
-#     if not request.user.is_authenticated:
-#         return HttpResponse("User is not authenticated", status=401)
-#
-#     if request.method == "POST":
-#         form = BookingForm(request.POST)
-#         if form.is_valid():
-#             booking = form.save(commit=False)
-#             print(f"Assigning user {request.user} to booking.")
-#             booking.user = request.user  # Set the logged-in user
-#             print(f"This is the booking.user {booking.user}")
-#             try:
-#                 booking.save()
-#                 messages.success(request, "Booking created successfully!")
-#                 return redirect("view_bookings")
-#             except ValidationError as e:
-#                 form.add_error(None, e.messages)
-#             except Exception as e:
-#                 form.add_error(None, str(e))
-#     else:
-#         form = BookingForm()
-#
-#
-#     from django.utils.encoding import force_str
-#
-#     resolved_user = force_str(request.user)
-#     print(f"Resolved User: {resolved_user}, Type: {type(resolved_user)}")
-#
-#     if request.user.is_authenticated:
-#         print(f"Authenticated User: {request.user}, Type: {type(request.user)}")
-#     else:
-#         print("User is not authenticated")
-#
-#     return render(request, "create-booking.html", {"form": form})
-
-
 
 @login_required
 def view_bookings(request):
@@ -151,7 +111,6 @@ def login_view(request):
     if request.method == 'POST':
         nickname = request.POST.get('nickname')
         password = request.POST.get('password')
-        # print(f"Nickname: {nickname}, Password: {password}")
         user = authenticate(request, nickname=nickname, password=password)
 
         if user is not None:
@@ -187,9 +146,6 @@ def create_profile(request):
 def profile(request):
     return render(request, 'details-profile.html')
 
-
-# def edit_profile(request):
-#     return render(request, 'edit-profile.html')
 
 def upload_profile_picture(request):
     if request.method == "POST" and request.FILES.get("profile_picture"):
@@ -231,8 +187,8 @@ def update_phone_number(request):
 
 """ Debug page for testing login functionalities."""
 # def test_login_view(request):
-#     # Replace with a valid query for a user
-#     user = Account.objects.filter(nickname="tsvtln").first()
+#     # Replace this with a valid query for a user
+#     user = Account.objects.filter(nickname="test_username").first()
 #     if not user:
 #         return HttpResponse("No user found to log in", status=404)
 #     login(request, user)  # Log in the user
@@ -251,6 +207,7 @@ def check_availability(request):
         return JsonResponse({'available_spaces': availability.available_spaces})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
 
 def view_user_profile(request, user_id):
     user = get_object_or_404(Account, id=user_id)

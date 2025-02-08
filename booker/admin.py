@@ -1,7 +1,14 @@
 from django.contrib import admin
-
 from booker.models import ParkingSpace, ParkingAvailability, Booking
 
+
+# Admin Panel - Parking space fields (we can access the admin panel from http(s)://hostname-or-ip/admin)
+# ID auto generated
+# created_at is date of booking creation
+# updated_at is date of last booking update
+# total_spaces is the pre-configured total_space in the panel
+# TODO: implement admin button on frontend to access the admin panel for admin/super users.
+#  Alternatively, create a proper panel for admins, so they don't use the django panel.
 
 @admin.register(ParkingSpace)
 class ParkingSpaceAdmin(admin.ModelAdmin):

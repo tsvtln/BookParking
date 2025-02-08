@@ -22,6 +22,10 @@ class AccountManager(BaseUserManager):
         return user
 
     def create_superuser(self, nickname, email, password=None, **extra_fields):
+        """
+        We can use this to further expand the admin logic and eventually create a proper panel with button on the
+        frontend for admin users to manage the bookings and users.
+        """
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -86,20 +90,11 @@ class Account(AbstractBaseUser, PermissionsMixin):
         return f"{self.first_name} ({self.nickname}) {self.second_name}"
 
 
-# class ParkingSpace(models.Model):
-#     total_spaces = models.PositiveIntegerField(
-#         help_text='Total number of parking spaces available each day.'
-#     )
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#
-#     def __str__(self):
-#         return f"Parking Space {self.total_spaces} total spaces left."
-
 class ParkingSpace(models.Model):
     """
     A single record representing the universal number of parking spaces
-    available each day (e.g., 42). We expect only 1 row in this table.
+    available each day (e.g., 42). We expect only 1 row/record in this table.
+    Based on this a signal will be initiated to auto-populate for 365days the available spaces.
     """
     total_spaces = models.PositiveIntegerField(
         help_text='Total number of parking spaces available each day.'
@@ -109,28 +104,13 @@ class ParkingSpace(models.Model):
 
     def save(self, *args, **kwargs):
         if ParkingSpace.objects.exists() and not self.pk:
+            # This is a fail-safe mechanism. Usually we shouldn't hit it, but if we somehow do, a manual edit in the DB
+            #  will be required.
             raise ValidationError("You have to edit or remove the previous configuration of available spaces.")
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Parking Space {self.total_spaces} total spaces left."
-
-
-# class ParkingAvailability(models.Model):
-#     date = models.DateField(
-#         unique=True,
-#         help_text='The date for which availability is being tracked.'
-#     )
-#
-#     available_spaces = models.PositiveIntegerField(
-#         help_text="Number of spaces available for parking spaces for this day."
-#     )
-#
-#     class Meta:
-#         ordering = ['date']
-#
-#     def __str__(self):
-#         return f'{self.date}: {self.available_spaces}'
 
 
 class ParkingAvailability(models.Model):
@@ -197,9 +177,8 @@ class Booking(models.Model):
         if availability.available_spaces <= 0:
             raise ValidationError("No spaces available for this date!")
 
-
-        # allow only 1 booking of a date per user
         if Booking.objects.filter(user=self.user, date=self.date).exists():
+            # allow only 1 booking of a date per user
             raise ValidationError(gl('You have already booked a parking space for this date.'))
 
         availability = ParkingAvailability.objects.filter(date=self.date).first()

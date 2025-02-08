@@ -10,12 +10,9 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -60,7 +57,6 @@ WSGI_APPLICATION = 'parkingBooker.wsgi.application'
 
 
 # Database
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -70,7 +66,6 @@ DATABASES = {
 
 
 # Password validation
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -88,7 +83,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = [
     'booker.authenticator.AccountBackend',
-    'django.contrib.auth.backends.ModelBackend',  # Default Django backend
+    'django.contrib.auth.backends.ModelBackend',  # Default Django backend needed for the current authentication logic
 ]
 AUTH_USER_MODEL = "booker.Account"
 

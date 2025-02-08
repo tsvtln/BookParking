@@ -113,19 +113,3 @@ class BookingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)  # pop the user from kwargs
         super().__init__(*args, **kwargs)
-
-    """ this breaks the booking saving in the front end """
-    # def clean(self):
-    #
-    #
-    #
-    #     cleaned_data = super().clean()
-    #     date = cleaned_data.get('date')
-    #
-    #     if not self.user:
-    #         raise ValidationError("User is required to make a booking.")
-    #
-    #     if Booking.objects.filter(user=self.user, date=date).exists():
-    #         raise ValidationError("You have already booked a parking space for this date.")
-    #
-    #     return cleaned_data

@@ -33,10 +33,6 @@
     </a>
     <ul class="navbar-nav d-flex flex-row">
         {% if user.is_authenticated %}
-            <!-- Navigation for logged-in users -->
-            {#            <li class="nav-item px-2">#}
-            {#                <a class="nav-link" href="{% url 'all-bookings' %}">All Bookings</a>#}
-            {#            </li>#}
             <li class="nav-item px-2">
                 <a class="nav-link" href="{% url 'profile' %}">Profile</a>
             </li>
@@ -89,28 +85,6 @@
         </select>
         <button id="update-calendar"><i class="fas fa-calendar"></i> Update</button>
     </div>
-
-    <!-- Bookings Table -->
-    {#    <table>#}
-    {#        <thead>#}
-    {#        <tr>#}
-    {#            <th>Date</th>#}
-    {#            <th>User</th>#}
-    {#        </tr>#}
-    {#        </thead>#}
-    {#        <tbody id="bookings-table">#}
-    {#        {% for booking in bookings %}#}
-    {#            <tr>#}
-    {#                <td>{{ booking.date }}</td>#}
-    {#                <td>{{ booking.user.nickname }}</td>#}
-    {#            </tr>#}
-    {#            {% empty %}#}
-    {#            <tr>#}
-    {#                <td colspan="2" class="no-bookings">No bookings found for this period.</td>#}
-    {#            </tr>#}
-    {#        {% endfor %}#}
-    {#        </tbody>#}
-    {#    </table>#}
     <table>
         <thead>
         <tr>
@@ -138,7 +112,7 @@
 </div>
 
 <footer>
-    <p>&copy; 2024 Parking Booker Hub. All rights reserved to ProNetGaming.</p>
+    <p>&copy; 2025 Parking Booker Hub. All rights reserved to ProNetGaming.</p>
 </footer>
 
 <script>

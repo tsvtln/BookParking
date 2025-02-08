@@ -1,11 +1,9 @@
 # from django.test import TestCase
-#
-# # Create your tests here.
 import os
 import django
 
 # Set up Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'parkingBooker.settings')  # Replace with your settings module
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'parkingBooker.settings')
 django.setup()
 #
 # from django.contrib.auth import authenticate

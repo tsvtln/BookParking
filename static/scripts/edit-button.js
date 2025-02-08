@@ -1,3 +1,5 @@
+// functionality for editing the phone number
+
 document.addEventListener("DOMContentLoaded", function () {
     const phoneDisplay = document.getElementById("phone-display");
     const phoneEdit = document.getElementById("phone-edit");
