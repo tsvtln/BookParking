@@ -1,0 +1,74 @@
+TODO: When users make a booking, to send mail to predefined person or HR general mail
+
+>>>> in settings configure the mailing:
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.pronetgaming.com'  # change according to pronet smtp
+EMAIL_PORT = 123  # change according to mail server port
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'someones-mail@pronetgaming.com'
+EMAIL_HOST_PASSWORD = 'mail-password'   # Hide it in .env file and use decouple.
+                                        # Use an app password, not your real password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+>>>> make in views or utils a mail sender:
+
+from django.core.mail import send_mail
+from django.conf import settings
+
+def send_booking_email(user, booking):
+    subject = f"New Parking Booking - {booking.date}"
+    message = f'User {user.nickname} has booked a parking space for {booking.date}.'
+
+    recipient_email = 'someone@pronetgaming.com'  # Change this to your recipient's email
+
+    send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [recipient_email],
+        fail_silently=False,
+    )
+
+
+>>>> add in the create booking views a send action:
+
+send_booking_email(request.user, booking)  # Send email after booking
+
+
+>>>> alternatively, you can make an html template for the mail, so it's prettier and send it instead of ugly plain text
+
+def send_booking_email(user, booking):
+    subject = f"New Parking Booking - {booking.date}"
+
+    # render email content using the HTML template
+    html_content = render_to_string("emails/booking_confirmation.html", {
+        "user": user,
+        "booking": booking
+    })
+    text_content = strip_tags(html_content)  # fallback plain text version
+
+    recipient_email = "someone@pronetgaming.com"  # change to recipient's email
+
+    email = EmailMultiAlternatives(
+        subject=subject,
+        body=text_content,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[recipient_email]
+    )
+
+    email.attach_alternative(html_content, "text/html")  # attach the HTML version
+    email.send()
+
+
+>>>> replace the logic from plain text to the html, for example like:
+                send_booking_email(request.user, booking)  # Send HTML email
+
+
+
+>>>> similar princible as above can be applied to send a PDF instead by using weasyprint module
+
+
+
+
